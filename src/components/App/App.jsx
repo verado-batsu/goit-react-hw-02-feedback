@@ -1,6 +1,12 @@
 import { Component } from 'react';
-import uniqid from 'uniqid';
+
+import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
 import { Statistics } from 'components/Statistics/Statistics';
+import { Section } from 'components/Section/Section';
+import { Notification } from 'components/Notification/Notification';
+
+import { Wrapper } from 'components/App/App.styled';
+	
 export class App extends Component {
 	utils = {
 		total: 0,
@@ -38,48 +44,32 @@ export class App extends Component {
 	}
 
 	render() {
-		const nameBtn = Object.keys(this.state);
+		const namesOfBtn = Object.keys(this.state);
 		const statisticsState = Object.entries(this.state);
+
 		const { total, positivePercentage } = this.utils;
 		
 		return (
-			<>
-				{/* <Statistics/> */}
-				<div>
-					<h2>Please leave feedback</h2>
-					<ul>
-						{nameBtn.map(name => {
-								return (
-										<li key={uniqid()}>
-											<button name={name} type='button' onClick={this.handleClick}>{name}</button>
-										</li>
-									)
-							})
-						}
-						
-					</ul>
-				</div>
-
-				<div>
-					<h2>Statistics</h2>
-					<ul>
-						{statisticsState.map(el => {
-								return (
-										<li key={uniqid()}>
-											<p >{el[0]}: {el[1]}</p>
-										</li>
-									)
-							})
-						}
-						<li key={uniqid()}>
-							<p >total: {total}</p>
-						</li>
-						<li key={uniqid()}>
-							<p >Positive feedback: {positivePercentage}%</p>
-						</li>
-					</ul>
-				</div>
-			</>
+			<Wrapper>
+				<Section title='Please leave feedback'>
+					<FeedbackOptions
+						options={namesOfBtn}
+						onLeaveFeedback={this.handleClick}
+					/>
+				</Section>
+				
+				<Section title="Statistics">
+					{total > 0 ? 
+						<Statistics
+							statisticsState={statisticsState}
+							total={total}
+							positivePercentage={positivePercentage}
+						/> :
+						<Notification message="There is no feedback"/>
+				}
+					
+				</Section>
+			</Wrapper>
 		);
 	}
 };
