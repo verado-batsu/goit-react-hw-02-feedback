@@ -1,4 +1,5 @@
 import uniqid from 'uniqid';
+import PropTypes from 'prop-types';
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -26,3 +27,9 @@ function Statistics({ statisticsState, total, positivePercentage }) {
 }
 
 export { Statistics };
+
+Statistics.propTypes = {
+	statisticsState: PropTypes.arrayOf(PropTypes.array.isRequired),
+	total: PropTypes.number.isRequired,
+	positivePercentage: PropTypes.number.isRequired,
+}

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function Notification({ message }) {
 	return (
 		<p>{message}</p>
@@ -5,3 +7,7 @@ function Notification({ message }) {
 }
 
 export { Notification };
+
+Notification.propTypes = {
+	message: PropTypes.string.isRequired,
+}
